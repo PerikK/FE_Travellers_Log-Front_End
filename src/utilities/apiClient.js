@@ -1,5 +1,4 @@
-import { url } from './url.js'
-
+import { url } from './apiUrl.js'
 
 async function login(username, password) {
 	return await post('login', { username, password }, false)
@@ -36,7 +35,6 @@ async function get(endpoint, auth = true) {
 	return await request('GET', endpoint, null, auth)
 }
 
-
 async function request(method, endpoint, data, auth = true) {
 	const opts = {
 		headers: {
@@ -60,10 +58,4 @@ async function request(method, endpoint, data, auth = true) {
 	return response.json()
 }
 
-export {
-	register,
-	login,
-	getUser,
-	getVisits,
-	createVisit,
-}
+export { register, login, getUser, getVisits, createVisit }

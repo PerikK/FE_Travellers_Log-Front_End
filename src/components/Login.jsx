@@ -1,18 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import url from '../utilities/url.js'
-
-// const port = import.meta.env.VITE_PORT;
-// const port = 4000
-// const apiUrl = `http://localhost:${port}`;
+import {apiUrl} from '../utilities/apiUrl.js'
 
 export default function Login() {
     const [credentials, setCredentials] = useState({ username: '', password: '' })
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const navigate = useNavigate()
-//     const { onLogin, error, setError } = useAuth();
-//   const [formData, setFormData] = useState({ username: "", password: "" });
+
 
 
     const handleClick = (e) => {
@@ -34,7 +29,7 @@ export default function Login() {
         e.preventDefault()
 
         try {
-            const response = await fetch(`${url}/users/login`, {
+            const response = await fetch(`${apiUrl}/users/login`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -58,7 +53,7 @@ export default function Login() {
     }
 
     return (
-                <div>
+        <div>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>

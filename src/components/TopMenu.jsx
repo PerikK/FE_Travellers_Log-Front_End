@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from "react";
 
 export default function TopMenu() {
+    
     return (
         <ul>
             <li>Visited Location</li>

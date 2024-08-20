@@ -34,22 +34,22 @@ export default function VisitsList({ visits, setVisits }) {
         <ul className="h-full overflow-auto">
             {visits.map(visit => (
                 <li className="m-2" key={visit.id}>
-                    <div className="max-h-80 p-3 bg-stone-300 rounded ">
+                    <div className="max-h-80 p-3 bg-stone-300 rounded">
                         <h3>{visit.location.name}</h3>
                         <p>Logs: </p>
                         <ul>
-                            {visit.logs.map(log => (
-                                <li key={log.id}>{log.logEntries.join(", ")}</li>
+                            {visit.logEntries.map(log => (
+                                <li key={log.id}>{log.logText}</li>
                             ))}
                         </ul>
                         <p>Pictures:</p>
                         <ul>
-                    {visit.pictures.map(picture => (
-                        <li key={picture.id}>
-                            <img src={picture.url} alt={`Visit ${visit.location.name}`} />
-                        </li>
-                    ))}
-                </ul>
+                            {visit.pictures.map(picture => (
+                                <li key={picture.id}>
+                                    <img src={picture.url} alt={`Visit ${visit.location.name}`} />
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 </li>
             ))}

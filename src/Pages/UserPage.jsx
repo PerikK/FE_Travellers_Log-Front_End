@@ -31,7 +31,7 @@ export default function UserPage() {
             <h2 className="mt-12 p-3 text-2xl text-center">Welcome, {user?.username} </h2>
             <div className='sticky grid gap-3 grid-cols-2'>
                 <div className="p-5 bg-teal-900 border-2 border-solid border-stone-700 rounded-md">
-                        {/* <AddVisitForm onAddVisit={handleAddVisit} /> */}
+                        <AddVisitForm onAddVisit={handleAddVisit} />
                         <p>test1</p>
                 </div>
                 <div className="p-5 bg-teal-900 border-2 border-solid border-stone-700 rounded-md shadow-xl">

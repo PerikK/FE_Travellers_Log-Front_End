@@ -67,7 +67,7 @@ export default function TopBar() {
     }
 
     return (        
-            <div className="h-28 grid grid-cols-3 items-center p-4 bg-gray-200 shadow-md">
+            <div className="h-28 grid grid-cols-3 items-center p-4 bg-zinc-500 shadow-md">
                 {!user
                     ? visitorsTopBar()
                     : usersTopBar()
@@ -77,14 +77,14 @@ export default function TopBar() {
                     handleClose={() => setIsLoginModalOpen(false)}
                     title="Login"
                 >
-                    <Login onSuccess={() => setIsLoginModalOpen(false)} />
+                <Login onSuccess={() => setIsLoginModalOpen(false)} />
                 </LoginRegisterModal>
                 <LoginRegisterModal
                     show={isRegisterModalOpen}
                     handleClose={() => setIsRegisterModalOpen(false)}
                     title="Register"
                 >
-                    <Register onSuccess={() => setIsRegisterModalOpen(false)} />
+                <Register onSuccess={() => setIsRegisterModalOpen(false)} />
                 </LoginRegisterModal>
             </div>      
     )

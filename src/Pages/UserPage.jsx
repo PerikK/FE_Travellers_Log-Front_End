@@ -30,14 +30,12 @@ export default function UserPage() {
             <div className="h-5/6">
             <h2 className="mt-12 p-3 text-2xl text-center">Welcome, {user?.username} </h2>
             <div className='sticky grid gap-3 grid-cols-2'>
-                <div className="p-5 bg-teal-900 border-2 border-solid border-stone-700 rounded-md">
+                <div className="mx-7 p-5 bg-teal-900 border-2 border-solid border-stone-700 rounded-md">
                         <AddVisitForm onAddVisit={handleAddVisit} />
-                        <p>test1</p>
                 </div>
-                <div className="p-5 bg-teal-900 border-2 border-solid border-stone-700 rounded-md shadow-xl">
-                    <h3 className="mb-3 text-xl text-center" >Your Visits</h3>
+                <div className="mx-7 p-5 bg-teal-900 border-2 border-solid border-stone-700 rounded-md shadow-xl">
+                    <h3 className=" mb-3 text-xl text-center" >Your Visits</h3>
                         <VisitsList  visits={visits} setVisits={setVisits} />
-                        <p>test1</p>
                 </div>
             </div>
             </div>

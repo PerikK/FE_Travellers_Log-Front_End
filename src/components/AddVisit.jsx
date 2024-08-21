@@ -116,7 +116,7 @@ export default function AddVisitForm({ onAddVisit }) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <div>
+            <div className="">
                 <label>
                     Location:
                     <input

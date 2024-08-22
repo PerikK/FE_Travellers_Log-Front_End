@@ -28,7 +28,11 @@ export default function VisitsList({ visits, setVisits }) {
     };
 
     const openUpdateModal = (visit) => {
-        setSelectedVisit(visit);
+        setSelectedVisit({
+        visitId: visit.id, 
+        newLogEntries: visit.logEntries,
+        newPictures: visit.pictures
+    });
         setIsUpdateModalOpen(true);
     };
 
@@ -66,14 +70,19 @@ export default function VisitsList({ visits, setVisits }) {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${localStorage.getItem('jwt')}`
                 },
-                body: JSON.stringify(updatedVisit)
+                body: JSON.stringify({
+                id: updatedVisit.id,
+                newLogEntries: updatedVisit.newLogEntries,
+                newPictures: updatedVisit.newPictures
+            })
             });
             const result = await response.json();
+            console.log('rrrrr',result);
             if (!response.ok) {
                 throw new Error(result.error);
             }
             setVisits(visits.map(v => v.id === updatedVisit.id ? result.visit_created : v));
-            closeModal();
+            closeUpdateModal();
         } catch (error) {
             console.error('Error updating visit:', error);
         }
@@ -99,7 +108,7 @@ export default function VisitsList({ visits, setVisits }) {
                     <li className="p-4 m-5 overflow-y-clip bg-DAmico_dark_red border border-Miro-mauve_dark shadow-lg rounded-xl" key={visit.id}>
                         <div className="max-h-max p-7 bg-DAmico_orange 
                          text-Miro-mauve_dark font-semibold  rounded-xl grid grid-rows-auto border border-Miro-mauve_dark shadow-lg">
-                            <h2 className="text-3xl text-center">{visit.location.name} <button onClick={() => openUpdateModal(visit)} className="m-5  h-3/6 w-36 bg-blue-500 text-sm text-white rounded-lg ">Update</button></h2>
+                            <h2 className="text-3xl text-center">{visit.location.name} <button onClick={() => openUpdateModal(visit)} className="m-5 hover:bg-DAmico_blue h-3/6 w-36 bg-DAmico_dark_blue text-sm text-white rounded-lg ">Update</button></h2>
                             
                             <br/>
                             <p className="text-Miro-mauve_dark underline text-3xl ">Logs: </p>

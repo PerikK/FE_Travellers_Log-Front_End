@@ -160,19 +160,19 @@ export default function AddVisitForm({ onAddVisit }) {
                 </label>
             </div>
             <div>
-                <label className="text-DAmico_blue text-xl font-extrabold"> 
+                <label className="text-DAmico_orange text-2xl font-extrabold"> 
                     Picture Source:
                     <select
                         className="m-7 px-3 py-1 text-center border-2 border-stone-900 bg-DAmico_blue rounded-md shadow-xl"
                         value={pictureSource}
                         onChange={(e) => setPictureSource(e.target.value)}
                     >
+                        <option value="upload">Upload from Computer</option>
                         <option value="url">URL</option>
-                        {/* <option value="upload">Upload from Computer</option> */}
                     </select>
                 </label>
             </div>
-            {/* {pictureSource === 'upload' ? (
+            {pictureSource === 'upload' ? (
                 <div>
                     <label className="text-sky-600 text-xl font-extrabold">
                         Pictures:
@@ -185,7 +185,7 @@ export default function AddVisitForm({ onAddVisit }) {
                         />
                     </label>
                 </div>
-            ) : ( */}
+            ) : (
                 <div>
                     <label>
                         Picture URL:
@@ -200,12 +200,12 @@ export default function AddVisitForm({ onAddVisit }) {
                     <button 
                         type="button" 
                         onClick={handleAddUrl}
-                        className="ml-2 px-3 py-1 bg-blue-500 text-white rounded-lg shadow-xl"
+                        className="ml-2 px-3 py-1 bg-DAmico_dark_blue hover:bg-DAmico_blue text-white rounded-lg shadow-xl"
                     >
                         Add Picture
                     </button>
                 </div>
-            {/* )} */}
+            )}
             {previewUrls.length > 0 && (
                 <div className="flex space-x-4">
                     {previewUrls.map((url, index) => (
@@ -227,7 +227,7 @@ export default function AddVisitForm({ onAddVisit }) {
                     <img src={isFullscreen} alt="Fullscreen Preview" className="max-w-full max-h-full" />
                 </div>
             )}
-            <button type="submit" className="m-7 px-3 py-1 text-center border-2 border-stone-500 bg-sky-700 rounded-md shadow-xl">
+            <button type="submit" className="m-7 px-3 py-1 text-center text-white border-2 border-stone-500 bg-DAmico_dark_blue hover:bg-DAmico_blue rounded-md shadow-xl">
                 Add visit
             </button>
             {error && <p style={{ color: 'red' }}>{error}</p>}

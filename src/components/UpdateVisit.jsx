@@ -9,6 +9,9 @@ export default function UpdateVisit({ visit, onVisitUpdate, setIsModalOpen }) {
         newPictures: []
     });
     const [error, setError] = useState(null);
+    const [newLogEntry, setNewLogEntry] = useState("");  // For the input field
+    const [newLogEntries, setNewLogEntries] = useState(visit.newLogEntries || []);
+    const [newPictures, setNewPictures] = useState(visit.newPictures || []);
     const [previewUrls, setPreviewUrls] = useState([]); 
     const [pictureSource, setPictureSource] = useState('upload');
     const [urlInput, setUrlInput] = useState('');
@@ -35,6 +38,13 @@ export default function UpdateVisit({ visit, onVisitUpdate, setIsModalOpen }) {
             newPictures: [...prev.newPictures, urlInput]
         }));
         setUrlInput('');
+    };
+
+        const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && newLogEntry.trim()) {
+            setNewLogEntries([...newLogEntries, newLogEntry.trim()]);
+            setNewLogEntry(""); 
+        }
     };
 
     const handleLogEntryChange = (e) => {

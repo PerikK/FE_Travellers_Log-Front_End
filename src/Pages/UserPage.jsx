@@ -30,7 +30,7 @@ export default function UserPage() {
                 {/* <div className="h-5 justify-items-center"> */}
                     <h2 className="my-12 mx-6 w-3/5  bg-DAmico_baige_pink rounded-full p-5 font-extrabold text-6xl text-Miro-orange_brown text-opacity-80 text-center">Welcome, {user?.username} </h2>
                     <div className='sticky grid gap-3 grid-cols-2'>
-                        <div className="mx-7 p-5 bg-Miro-beige_dark border-2 border-solid border-stone-700 rounded-md shadow-xl">
+                        <div className="mx-7 p-5 h-fit bg-DAmico_blue border-2 border-solid border-stone-700 rounded-md shadow-xl">
                                 <AddVisitForm onAddVisit={handleAddVisit} />
                         </div>
                         <div className="mx-7 p-5 bg-DAmico_blue border-2 border-solid border-stone-700 rounded-md shadow-xl overflow-scroll">

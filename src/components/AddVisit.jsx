@@ -14,9 +14,10 @@ export default function AddVisitForm({ onAddVisit }) {
     })
     const [error, setError] = useState(null)
     const [success, setSuccess] = useState(null)
-    const [previewUrl, setPreviewUrl] = useState(null) 
+    const [previewUrls, setPreviewUrls] = useState([]) 
     const [isFullscreen, setIsFullscreen] = useState(false) 
     const [pictureSource, setPictureSource] = useState('upload')
+    const [urlInput, setUrlInput] = useState('') 
 
     useEffect(() => {
         if (user) {
@@ -33,7 +34,8 @@ export default function AddVisitForm({ onAddVisit }) {
             logEntries: [],
             pictures: []
         }))
-        setPreviewUrl(null)
+        setPreviewUrls([]) 
+        setUrlInput('') 
     }
 
     const handleChange = (e) => {
@@ -56,33 +58,49 @@ export default function AddVisitForm({ onAddVisit }) {
     }
 
     const handleFileChange = (e) => {
-        const file = e.target.files[0]
-        if (file) {
+        const files = Array.from(e.target.files)
+        const fileReaders = []
+        const newPictures = []
+        const newPreviewUrls = []
+
+        files.forEach((file, index) => {
             const reader = new FileReader()
+            fileReaders.push(reader)
+
             reader.onloadend = () => {
-                setPreviewUrl(reader.result) 
-                setVisit(prevVisit => ({
-                    ...prevVisit,
-                    pictures: [reader.result] 
-                }))
+                newPreviewUrls.push(reader.result)
+                newPictures.push(reader.result)
+
+                if (index === files.length - 1) {
+                    setPreviewUrls(prevUrls => [...prevUrls, ...newPreviewUrls])
+                    setVisit(prevVisit => ({
+                        ...prevVisit,
+                        pictures: [...prevVisit.pictures, ...newPictures]
+                    }))
+                }
             }
-            reader.readAsDataURL(file) 
-        }
+            reader.readAsDataURL(file)
+        })
     }
 
     const handleUrlChange = (e) => {
         const { value } = e.target
-        setPreviewUrl(value) 
-        setVisit(prevVisit => ({
-            ...prevVisit,
-            pictures: [value] 
-        }))
+        setUrlInput(value) 
+    }
+
+    const handleAddUrl = () => {
+        if (urlInput.trim()) {
+            setPreviewUrls(prevUrls => [...prevUrls, urlInput])
+            setVisit(prevVisit => ({
+                ...prevVisit,
+                pictures: [...prevVisit.pictures, urlInput]
+            }))
+            setUrlInput('') 
+        }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
-        console.log('Submitting Visit Data:', visit) 
 
         try {
             const response = await fetch(`${apiUrl}/visits`, {
@@ -104,23 +122,23 @@ export default function AddVisitForm({ onAddVisit }) {
                     logEntries: [],
                     pictures: []
                 })
-                setPreviewUrl(null) 
+                setPreviewUrls([]) 
                 setSuccess('Visit created successfully!')
                 setError(null)
             }
         } catch (error) {
-            console.log('Error creating visit:', error)
+            console.error('Error creating visit:', error)
             setError(error.message)
         }
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <div className="">
-                <label>
+            <div>
+                <label className="text-sky-600 text-2xl font-extrabold">
                     Location:
                     <input
-                        className="m-7 px-3 py-1 text-center border-2 border-stone-900 rounded-md shadow-xl"
+                        className="m-7 px-3 py-1 text-center border-2 border-stone-900 bg-sky-300 rounded-md shadow-xl"
                         type="text"
                         name="locationName"
                         value={visit.locationName}
@@ -130,10 +148,10 @@ export default function AddVisitForm({ onAddVisit }) {
                 </label>
             </div>
             <div>
-                <label>
+                <label className="text-sky-600 text-2xl font-extrabold">
                     Log Entry:
                     <input
-                        className="m-7 px-3 py-1 text-center border-2 border-stone-900 rounded-md shadow-xl"
+                        className="m-7 px-3 py-1 text-center border-2 border-stone-900 bg-sky-300 rounded-md shadow-xl"
                         type="text"
                         name="logEntry"
                         value={visit.logEntries[0] || ''}
@@ -142,10 +160,10 @@ export default function AddVisitForm({ onAddVisit }) {
                 </label>
             </div>
             <div>
-                <label>
+                <label className="text-sky-600 text-xl font-extrabold"> 
                     Picture Source:
                     <select
-                        className="m-7 px-3 py-1 text-center border-2 border-stone-900 rounded-md shadow-xl"
+                        className="m-7 px-3 py-1 text-center border-2 border-stone-900 bg-sky-300 rounded-md shadow-xl"
                         value={pictureSource}
                         onChange={(e) => setPictureSource(e.target.value)}
                     >
@@ -156,13 +174,14 @@ export default function AddVisitForm({ onAddVisit }) {
             </div>
             {pictureSource === 'upload' ? (
                 <div>
-                    <label>
-                        Picture:
+                    <label className="text-sky-600 text-xl font-extrabold">
+                        Pictures:
                         <input
-                            className="m-7 px-3 py-1 text-center border-2 border-stone-900 rounded-md shadow-xl"
+                            className="m-7 px-3 py-1 text-center border-2 border-stone-900 bg-sky-300 rounded-md shadow-xl"
                             type="file"
                             name="pictureFile"
                             onChange={handleFileChange} 
+                            multiple 
                         />
                     </label>
                 </div>
@@ -171,34 +190,44 @@ export default function AddVisitForm({ onAddVisit }) {
                     <label>
                         Picture URL:
                         <input
-                            className="m-7 px-3 py-1 text-center border-2 border-stone-900 rounded-md shadow-xl"
+                            className="m-7 px-3 py-1 text-center border-2 border-stone-900 bg-sky-300 rounded-md shadow-xl"
                             type="text"
                             name="pictureUrl"
-                            value={visit.pictures[0] || ''}
+                            value={urlInput}
                             onChange={handleUrlChange} 
                         />
                     </label>
+                    <button 
+                        type="button" 
+                        onClick={handleAddUrl}
+                        className="ml-2 px-3 py-1 bg-blue-500 text-white rounded-lg shadow-xl"
+                    >
+                        Add Picture
+                    </button>
                 </div>
             )}
-            {previewUrl && (
-                <div>
-                    <img
-                        src={previewUrl}
-                        alt="Preview"
-                        className="w-32 h-32 object-cover cursor-pointer"
-                        onClick={() => setIsFullscreen(true)} 
-                    />
-                    {isFullscreen && (
-                        <div
-                            className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
-                            onClick={() => setIsFullscreen(false)} 
-                        >
-                            <img src={previewUrl} alt="Fullscreen Preview" className="max-w-full max-h-full" />
-                        </div>
-                    )}
+            {previewUrls.length > 0 && (
+                <div className="flex space-x-4">
+                    {previewUrls.map((url, index) => (
+                        <img
+                            key={index}
+                            src={url}
+                            alt={`Preview ${index + 1}`}
+                            className="w-32 h-32 object-cover cursor-pointer"
+                            onClick={() => setIsFullscreen(url)} 
+                        />
+                    ))}
                 </div>
             )}
-            <button type="submit" className="m-7 px-3 py-1 text-center border-2 border-stone-900 rounded-md shadow-xl">
+            {isFullscreen && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+                    onClick={() => setIsFullscreen(false)} 
+                >
+                    <img src={isFullscreen} alt="Fullscreen Preview" className="max-w-full max-h-full" />
+                </div>
+            )}
+            <button type="submit" className="m-7 px-3 py-1 text-center border-2 border-stone-500 bg-sky-700 rounded-md shadow-xl">
                 Add visit
             </button>
             {error && <p style={{ color: 'red' }}>{error}</p>}

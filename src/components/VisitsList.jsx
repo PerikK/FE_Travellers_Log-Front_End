@@ -20,8 +20,6 @@ export default function VisitsList({ visits, setVisits }) {
         setIsModalOpen(false);
         setSelectedImage(null);
     };
-
-    // const onClickOut
     
     useEffect(() => {
         if (!user) return <div>Loading visits...</div>
@@ -48,25 +46,25 @@ export default function VisitsList({ visits, setVisits }) {
     return (
         <>
             {console.log(visits)}
-            <ul className="h-full overflow-auto">
+            <ul className="h-full ">
                 {visits.map(visit => (
-                    <li className="m-2 p-2" key={visit.id}>
-                        <div className="max-h-80 p-3 bg-stone-300 rounded">
-                            <h3>{visit.location.name}</h3>
-                            <p>Logs: </p>
+                    <li className="p-4 overflow-y-clip" key={visit.id}>
+                        <div className="max-h-max p-7 bg-sky-900 text-sky-300 border-green-600 rounded-xl">
+                            <h2 className="text-3xl">{visit.location.name}</h2>
+                            <p className="text-sky-600 text-2xl">Logs: </p>
                             <ul>
                                 {visit.logEntries.map(log => (
                                     <li key={log.id}>{log.logText}</li>
                                 ))}
                             </ul>
-                            <p>Pictures:</p>
-                            <ul>
+                            <p className="text-sky-600 text-2xl">Pictures:</p>
+                            <ul className="flex overflow-x-scroll">
                                 {visit.pictures.map((picture) => (
-                                    <li key={picture.id} className="">
+                                    <li key={picture.id} >
                                         <img
                                             src={picture.pictureUrl}
                                             alt={`Visit ${visit.location.name}`}
-                                            className="max-w-24 cursor-pointer"
+                                            className="max-w-24 m-4 cursor-pointer"
                                             onClick={() => openModal(picture.pictureUrl)}
                                         />
                                     </li>

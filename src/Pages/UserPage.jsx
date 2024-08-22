@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import useUser from "../hooks/useUser"
 import AddVisitForm from "../components/AddVisit"
 import VisitsList from "../components/VisitsList"
-import { useNavigate } from "react-router-dom"
 import TopBar from "../components/TopBar"
 
 const port = 4000
@@ -13,11 +13,11 @@ export default function UserPage() {
     const { user, setUser, logout } = useUser()
     const navigate = useNavigate()
     
-    // if (!user || !user.id) {
-    //     navigate('/')
-    //     setUser(null)
-    //     return
-    // }
+    if (!user || !user.id) {
+        navigate('/')
+        setUser(null)
+        return
+    }
      if (!user) return <div>Loading UserPage...</div>
 
     const handleAddVisit = (newVisit) => {
@@ -26,15 +26,15 @@ export default function UserPage() {
 
     return (
         <>
-            <div className="m-10 col-span-2 row-span-1"><TopBar /></div>
+            <div className="m-10 col-span-2 row-span-1 border-2 border-green-700 rounded-xl"><TopBar /></div>
             <div className="h-5/6">
-            <h2 className="mt-12 p-3 text-2xl text-center">Welcome, {user?.username} </h2>
+            <h2 className="my-12 mx-6 bg-slate-600 rounded-full p-5 font-extrabold text-6xl text-red-500 text-opacity-80 text-center">Welcome, {user?.username} </h2>
             <div className='sticky grid gap-3 grid-cols-2'>
-                <div className="mx-7 p-5 bg-teal-900 border-2 border-solid border-stone-700 rounded-md">
+                <div className="mx-7 p-5 bg-teal-900 border-2 border-solid border-stone-700 rounded-md shadow-xl">
                         <AddVisitForm onAddVisit={handleAddVisit} />
                 </div>
-                <div className="mx-7 p-5 bg-teal-900 border-2 border-solid border-stone-700 rounded-md shadow-xl">
-                    <h3 className=" mb-3 text-xl text-center" >Your Visits</h3>
+                <div className="mx-7 p-5 bg-teal-900 border-2 border-solid border-stone-700 rounded-md shadow-xl overflow-scroll">
+                    <h3 className=" mb-3 text-5xl text-center max-h-80 p-3  text-sky-300  rounded" >Your Visits</h3>
                         <VisitsList  visits={visits} setVisits={setVisits} />
                 </div>
             </div>

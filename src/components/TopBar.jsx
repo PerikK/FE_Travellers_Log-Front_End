@@ -24,21 +24,20 @@ export default function TopBar() {
     const visitorsTopBar = () => {
         return (
             <>
-                <div>Logo</div>
+                <img src="../src/assets/img/favicon-32x32.png" alt="F-L Logo" className="w-20 m-4"/>
                 <div>
-                    <h2>`Welcome to the Traveller's Log. You can Log In or create you new Account`</h2>
+                    <h2 className="text-3xl p-3 m-3">Welcome to the Traveller's Log. <br/>You can Log In or create you new account</h2>
                 </div>
-                <div className="flex space-x-4">
+                <div className="grid grid-cols-2">
                     <button
                         onClick={openLoginModal}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg"
+                        className="m-5 h-3/6 bg-blue-500 text-white rounded-lg"
                     >
                         Login
                     </button>
-                    <p>--OR--</p>
                     <button
                         onClick={openRegisterModal}
-                        className="px-4 py-2 bg-green-500 text-white rounded-lg"
+                        className="m-5 h-3/6 bg-green-500 text-white rounded-lg"
                     >
                         Register
                     </button>
@@ -50,14 +49,14 @@ export default function TopBar() {
     const usersTopBar = () => {
         return (
             <>
-                <div>Logo</div>
+                <img src="../src/assets/img/favicon-32x32.png" alt="F-L Logo" className="w-24 m-4"/>
                 <div>
                     <TopMenu />
                 </div>
                 <div className="flex space-x-4">
                     <button
                         onClick={logout}
-                        className="mx-12 px-14 py-2 bg-red-500 text-white rounded-lg"
+                        className="mx-16 my-6 h-3/6 w-3/5 bg-red-500 text-white rounded-lg"
                         >
                         Logout
                     </button> 
@@ -67,7 +66,7 @@ export default function TopBar() {
     }
 
     return (        
-            <div className="h-28 grid grid-cols-3 items-center p-4 bg-zinc-500 shadow-md">
+            <div className="h-32 p-1 grid grid-cols-[1fr_5fr_2fr] align-center  bg-zinc-500 shadow-md">
                 {!user
                     ? visitorsTopBar()
                     : usersTopBar()

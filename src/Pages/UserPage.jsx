@@ -33,8 +33,8 @@ export default function UserPage() {
                         <div className="mx-7 p-5 bg-Miro-beige_dark border-2 border-solid border-stone-700 rounded-md shadow-xl">
                                 <AddVisitForm onAddVisit={handleAddVisit} />
                         </div>
-                        <div className="mx-7 p-5 bg-Miro-beige_dark border-2 border-solid border-stone-700 rounded-md shadow-xl overflow-scroll">
-                            <h3 className=" mb-3 text-5xl text-center max-h-80 p-3  text-Miro-mauve_dark  rounded" >Your Visits</h3>
+                        <div className="mx-7 p-5 bg-DAmico_blue border-2 border-solid border-stone-700 rounded-md shadow-xl overflow-scroll">
+                            <h3 className=" mb-3 text-5xl text-center max-h-80 p-3  text-DAmico_dark_blue  rounded" >Your Visits</h3>
                                 <VisitsList  visits={visits} setVisits={setVisits} />
                         </div>
                     </div>

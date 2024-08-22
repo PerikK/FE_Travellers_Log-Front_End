@@ -37,7 +37,7 @@ export default function TopBar() {
                     </button>
                     <button
                         onClick={openRegisterModal}
-                        className="m-5 h-3/6 bg-green-500 text-white rounded-lg"
+                        className="m-5 h-3/6 bg-green-500 text-white rounded-lg shadow-lg"
                     >
                         Register
                     </button>
@@ -56,7 +56,7 @@ export default function TopBar() {
                 <div className="flex space-x-4">
                     <button
                         onClick={logout}
-                        className="mx-16 my-6 h-3/6 w-3/5 bg-red-500 text-white rounded-lg"
+                        className="mx-16 my-6 h-3/6 w-3/5 bg-red-500 text-white shadow-lg rounded-lg"
                         >
                         Logout
                     </button> 

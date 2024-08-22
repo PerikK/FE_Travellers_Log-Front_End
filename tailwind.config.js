@@ -5,8 +5,10 @@ export default {
 		extend: {
 			colors: {
 				'DAmico_blue': '#019fae',
-				DAmico_orange: '#dfb500',
+				'DAmico_orange': '#dfb500',
 				'DAmico_baige_pink': '#c6b5a4',
+				'DAmico_dark_blue': '#1c2836',
+				'DAmico_dark_red': '#be1e00',
 				'Miro-beige_light': '#dedcc1',
 				'Miro-beige_dark': '#dccebf',
 				'Miro-mauve_dark': '#577cb3',

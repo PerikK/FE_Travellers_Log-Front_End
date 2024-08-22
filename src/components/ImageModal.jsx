@@ -1,4 +1,4 @@
-export default function Modal({ isOpen, onClose, children }) {
+export default function ImageModal({ isOpen, onClose, children }) {
     if (!isOpen) return null;
 
     return (
@@ -8,7 +8,7 @@ export default function Modal({ isOpen, onClose, children }) {
                     className="absolute top-0 right-0 m-2 text-2xl text-black bg-white rounded-full p-1"
                     onClick={onClose}
                 >
-                    &#x2715;
+                    X
                 </button>
                 {children}
             </div>

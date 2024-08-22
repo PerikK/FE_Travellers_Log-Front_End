@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import useUser from "../hooks/useUser"
+import UpdateVisit from "./UpdateVisit"
+import UpdateVisitModal from "./UpdateVisitModal"
 import ImageMOdal from '../components/ImageModal'
 
 const port = 4000
@@ -8,8 +10,12 @@ const apiUrl = `http://localhost:${port}`
 export default function VisitsList({ visits, setVisits }) {
     const { user } = useUser()
     const id = user.id   
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
+
+    const [selectedImage, setSelectedImage] = useState(null)
+    const [selectedVisit, setSelectedVisit] = useState(null)
+
 
     const openModal = (imageUrl) => {
         setSelectedImage(imageUrl);
@@ -19,6 +25,16 @@ export default function VisitsList({ visits, setVisits }) {
     const closeModal = () => {
         setIsModalOpen(false);
         setSelectedImage(null);
+    };
+
+    const openUpdateModal = (visit) => {
+        setSelectedVisit(visit);
+        setIsUpdateModalOpen(true);
+    };
+
+    const closeUpdateModal = () => {
+        setIsUpdateModalOpen(false);
+        setSelectedVisit(null);
     };
     
     useEffect(() => {
@@ -41,7 +57,28 @@ export default function VisitsList({ visits, setVisits }) {
         }
         fetchVisits()
     }, [user, id, setVisits])
-    
+
+     const onVisitUpdate = async (updatedVisit) => {
+        try {
+            const response = await fetch(`${apiUrl}/visits/${user.id}`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+                },
+                body: JSON.stringify(updatedVisit)
+            });
+            const result = await response.json();
+            if (!response.ok) {
+                throw new Error(result.error);
+            }
+            setVisits(visits.map(v => v.id === updatedVisit.id ? result.visit_created : v));
+            closeModal();
+        } catch (error) {
+            console.error('Error updating visit:', error);
+        }
+    };
+  
     const formatDate = (createdAt) => {
         const date = new Date(createdAt)
         const day = String(date.getDate()).padStart(2, '0')
@@ -59,10 +96,11 @@ export default function VisitsList({ visits, setVisits }) {
             {console.log(visits)}
             <ul className="h-full ">
                 {visits.map(visit => (
-                    <li className="p-4 overflow-y-clip" key={visit.id}>
-                        <div className="max-h-max p-7 bg-Miro-beige_light text-Miro-mauve_dark font-semibold  rounded-xl grid grid-rows-auto border border-Miro-mauve_dark shadow-md">
-                            <h2 className="text-3xl text-center">{visit.location.name}</h2>
-                            <button>test</button>
+                    <li className="p-4 m-5 overflow-y-clip bg-DAmico_dark_red border border-Miro-mauve_dark shadow-lg rounded-xl" key={visit.id}>
+                        <div className="max-h-max p-7 bg-DAmico_orange 
+                         text-Miro-mauve_dark font-semibold  rounded-xl grid grid-rows-auto border border-Miro-mauve_dark shadow-lg">
+                            <h2 className="text-3xl text-center">{visit.location.name} <button onClick={() => openUpdateModal(visit)} className="m-5  h-3/6 w-36 bg-blue-500 text-sm text-white rounded-lg ">Update</button></h2>
+                            
                             <br/>
                             <p className="text-Miro-mauve_dark underline text-3xl ">Logs: </p>
                             <ul className="">
@@ -86,7 +124,7 @@ export default function VisitsList({ visits, setVisits }) {
                                         <img
                                             src={picture.pictureUrl}
                                             alt={`Visit ${visit.location.name}`}
-                                            className="max-w-24 m-4 cursor-pointer"
+                                            className="max-h-32 p-5 m-4 cursor-pointer"
                                             onClick={() => openModal(picture.pictureUrl)}
                                         />
                                     </li>
@@ -105,6 +143,15 @@ export default function VisitsList({ visits, setVisits }) {
                     />
                 )}
             </ImageMOdal>
+            {isUpdateModalOpen && selectedVisit && (
+            <UpdateVisitModal isOpen={isUpdateModalOpen} onClose={closeUpdateModal}>
+                <UpdateVisit
+                    visit={selectedVisit}
+                    onVisitUpdate={onVisitUpdate}
+                    setIsModalOpen={setIsUpdateModalOpen}
+                />
+            </UpdateVisitModal>
+            )}
         </>
     )
 }

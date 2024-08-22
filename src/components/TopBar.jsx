@@ -66,7 +66,7 @@ export default function TopBar() {
     }
 
     return (        
-            <div className="h-32 p-1 grid grid-cols-[1fr_5fr_2fr] align-center  bg-zinc-500 shadow-md">
+            <div className="h-32 w-full p-1 border-3 border-Miro-orange_brown rounded-3xl grid grid-cols-[1fr_5fr_2fr] align-center  bg-DAmico_blue shadow-md">
                 {!user
                     ? visitorsTopBar()
                     : usersTopBar()

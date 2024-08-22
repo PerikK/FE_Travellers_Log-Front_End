@@ -57,6 +57,22 @@ export default function AddVisitForm({ onAddVisit }) {
         setSuccess(null)
     }
 
+    const handleUrlChange = (e) => {
+        const { value } = e.target
+        setUrlInput(value) 
+    }
+
+    const handleAddUrl = () => {
+        if (urlInput.trim()) {
+            setPreviewUrls(prevUrls => [...prevUrls, urlInput])
+            setVisit(prevVisit => ({
+                ...prevVisit,
+                pictures: [...prevVisit.pictures, urlInput]
+            }))
+            setUrlInput('') 
+        }
+    }
+
     const handleFileChange = (e) => {
         const files = Array.from(e.target.files)
         const fileReaders = []
@@ -81,22 +97,6 @@ export default function AddVisitForm({ onAddVisit }) {
             }
             reader.readAsDataURL(file)
         })
-    }
-
-    const handleUrlChange = (e) => {
-        const { value } = e.target
-        setUrlInput(value) 
-    }
-
-    const handleAddUrl = () => {
-        if (urlInput.trim()) {
-            setPreviewUrls(prevUrls => [...prevUrls, urlInput])
-            setVisit(prevVisit => ({
-                ...prevVisit,
-                pictures: [...prevVisit.pictures, urlInput]
-            }))
-            setUrlInput('') 
-        }
     }
 
     const handleSubmit = async (e) => {
@@ -135,10 +135,10 @@ export default function AddVisitForm({ onAddVisit }) {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label className="text-sky-600 text-2xl font-extrabold">
+                <label className="text-DAmico_orange text-2xl font-extrabold">
                     Location:
                     <input
-                        className="m-7 px-3 py-1 text-center border-2 border-stone-900 bg-sky-300 rounded-md shadow-xl"
+                        className="m-7 px-3 py-1 text-center border-2 border-stone-900 bg-Miro-mauve_dark rounded-md shadow-xl"
                         type="text"
                         name="locationName"
                         value={visit.locationName}
@@ -148,10 +148,10 @@ export default function AddVisitForm({ onAddVisit }) {
                 </label>
             </div>
             <div>
-                <label className="text-sky-600 text-2xl font-extrabold">
+                <label className="text-stone-700 text-2xl font-extrabold">
                     Log Entry:
                     <input
-                        className="m-7 px-3 py-1 text-center border-2 border-stone-900 bg-sky-300 rounded-md shadow-xl"
+                        className="m-7 px-3 py-1 text-center border-2 border-stone-00 bg-DAmico_blue rounded-md shadow-xl"
                         type="text"
                         name="logEntry"
                         value={visit.logEntries[0] || ''}
@@ -160,19 +160,19 @@ export default function AddVisitForm({ onAddVisit }) {
                 </label>
             </div>
             <div>
-                <label className="text-sky-600 text-xl font-extrabold"> 
+                <label className="text-DAmico_blue text-xl font-extrabold"> 
                     Picture Source:
                     <select
-                        className="m-7 px-3 py-1 text-center border-2 border-stone-900 bg-sky-300 rounded-md shadow-xl"
+                        className="m-7 px-3 py-1 text-center border-2 border-stone-900 bg-DAmico_blue rounded-md shadow-xl"
                         value={pictureSource}
                         onChange={(e) => setPictureSource(e.target.value)}
                     >
-                        <option value="upload">Upload from Computer</option>
                         <option value="url">URL</option>
+                        {/* <option value="upload">Upload from Computer</option> */}
                     </select>
                 </label>
             </div>
-            {pictureSource === 'upload' ? (
+            {/* {pictureSource === 'upload' ? (
                 <div>
                     <label className="text-sky-600 text-xl font-extrabold">
                         Pictures:
@@ -185,7 +185,7 @@ export default function AddVisitForm({ onAddVisit }) {
                         />
                     </label>
                 </div>
-            ) : (
+            ) : ( */}
                 <div>
                     <label>
                         Picture URL:
@@ -205,7 +205,7 @@ export default function AddVisitForm({ onAddVisit }) {
                         Add Picture
                     </button>
                 </div>
-            )}
+            {/* )} */}
             {previewUrls.length > 0 && (
                 <div className="flex space-x-4">
                     {previewUrls.map((url, index) => (

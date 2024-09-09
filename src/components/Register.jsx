@@ -1,6 +1,7 @@
 import { useState } from "react"
 const port = 4000
-const apiUrl = `https://be-travellers-log-back-end.vercel.app`
+// const apiUrl = `https://be-travellers-log-back-end.vercel.app`
+const apiUrl = import.meta.env.VITE_API_BASE_URL
 
 export default function Register({ onSuccess }) {
   const [userData, setUserData] = useState({ username: '', password: '' })

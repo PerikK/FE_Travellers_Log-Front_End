@@ -5,7 +5,8 @@ import UpdateVisitModal from "./UpdateVisitModal"
 import ImageMOdal from '../components/ImageModal'
 
 const port = 4000
-const apiUrl = `https://be-travellers-log-back-end.vercel.app`
+// const apiUrl = `https://be-travellers-log-back-end.vercel.app`
+const apiUrl = import.meta.env.VITE_API_BASE_URL
 
 export default function VisitsList({ visits, setVisits }) {
     const { user } = useUser()

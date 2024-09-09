@@ -3,7 +3,8 @@ import { useNavigate } from "react-router-dom"
 import { jwtDecode } from 'jwt-decode'
 
 const port = 4000
-const apiUrl = `https://be-travellers-log-back-end.vercel.app`
+// const apiUrl = `https://be-travellers-log-back-end.vercel.app`
+const apiUrl = import.meta.env.VITE_API_BASE_URL
 
 const UserContext = createContext(
 //     {

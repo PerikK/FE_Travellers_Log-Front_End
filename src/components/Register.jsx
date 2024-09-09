@@ -1,6 +1,6 @@
 import { useState } from "react"
 const port = 4000
-const apiUrl = `http://localhost:${port}`
+const apiUrl = `https://be-travellers-log-back-end.vercel.app`
 
 export default function Register({ onSuccess }) {
   const [userData, setUserData] = useState({ username: '', password: '' })

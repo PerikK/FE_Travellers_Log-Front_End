@@ -4,7 +4,7 @@ import useUser from '../hooks/useUser'
 import { jwtDecode } from 'jwt-decode'
 
 const port = 4000
-const apiUrl = `http://localhost:${port}`
+const apiUrl = `https://be-travellers-log-back-end.vercel.app`
 
 export default function Login({ onSuccess, initialFocusRef }) {
   const [credentials, setCredentials] = useState({ username: '', password: '' })

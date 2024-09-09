@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import useUser from "../hooks/useUser"
 
 const port = 4000
-const apiUrl = `http://localhost:${port}`
+const apiUrl = `https://be-travellers-log-back-end.vercel.app`
 
 export default function AddVisitForm({ onAddVisit }) {
     const { user } = useUser()

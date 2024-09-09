@@ -6,7 +6,7 @@ import VisitsList from "../components/VisitsList"
 import TopBar from "../components/TopBar"
 
 const port = 4000
-const apiUrl = `http://localhost:${port}`
+const apiUrl = `https://be-travellers-log-back-end.vercel.app`
 
 export default function UserPage() {
     const [visits, setVisits] = useState([])

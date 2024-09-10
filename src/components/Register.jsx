@@ -20,6 +20,7 @@ export default function Register({ onSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    console.log(apiUrl);
     try {
       const response = await fetch(`${apiUrl}/users`, {
         method: 'POST',
